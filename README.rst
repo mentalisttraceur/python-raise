@@ -43,6 +43,10 @@ Portability
 Portable to all releases of both Python 3 and Python 2 back to 2.5,
 when ``BaseException`` was first added.
 
+(If you polyfill ``BaseException`` globally and/or make it fallback to
+using ``Exception`` when ``BaseException`` doesn't exist, it will likely
+work on all Python 2 versions and probably on even earlier versions.)
+
 
 Advanced/Manual Installation
 ----------------------------
