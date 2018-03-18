@@ -25,6 +25,6 @@ __all__ = ('raise_',)
 try:
     BaseException.with_traceback
 except AttributeError:
-    from raise2 import raise_, __version__
+    from raise_.raise2 import raise_, __version__
 else:
-    from raise3 import raise_, __version__
+    from raise_.raise3 import raise_, __version__

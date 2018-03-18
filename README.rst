@@ -57,8 +57,8 @@ on your needs:
    *as* ``raise_.py``.
 
 2. If you're adding it into the source tree of a project that should
-   work with both Python 3 and Python 2 and older, copy the files
-   ``raise_.py``, ``raise3.py``, and ``raise2.py``.
+   work with both Python 3 and Python 2 and older, copy the whole
+   ``raise_`` directory.
 
 Both of these methods have the advantage that your code can just do
 ``from raise_ import raise_`` and it'll just work consistently,
