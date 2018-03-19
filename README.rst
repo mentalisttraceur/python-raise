@@ -134,8 +134,8 @@ SyntaxError in Python 3, which is uncatchable within the same file.
 Design Decisions
 ----------------
 
-* We allow ``exception`` to be a type instead of an instance, because
-  this is a convention *very* ingrained in Python itself.
+* We allow ``exception`` to be either an instance or a type, because this
+  convention is *very* ingrained in Python.
 
 * We do not currently implement an equivalent to Python 3's ``except
   ... from ...`` syntax.
