@@ -214,12 +214,17 @@ Design Decisions
 * ``__init__.py`` tries ``BaseException.with_traceback`` and uses
   ``AttributeError`` to fail instead of ``import raise_.raise2`` and
   ``SyntaxError`` to fail because it conceptually highlights the
-  primacy of Python 3 as the ought-to-be-default case. Sadly this
-  breaks ``pylint`` on Python 3, because it unconditionally imports
-  the `raise2` and aborts upon getting the syntax error. But on a tiny
-  module like this, that's not a major issue. I manually worked around
-  it by commenting out the offending import, and I don't foresee enough
-  changes to make that a hassle.
+  primacy of Python 3 as the ought-to-be-default case.
+
+  I also think it's conceptually cleaner to *not* waste Python's time
+  parsing and interpreting a file only for it to abort on a syntax
+  error. Performance-wise it's negligible and thus a non-issue though.
+
+  Sadly this breaks ``pylint`` on Python 3, because it unconditionally
+  imports the `raise2` and aborts upon getting the syntax error. But on
+  a tiny module like this, that's not a major issue. I manually worked
+  around it to run ``pylint`` by commenting out the offending import,
+  and I don't foresee enough changes to make that a hassle.
 
 * We don't do anything about ``flake8`` complaining that ``__version__``
   is imported but not used because this module is too tiny for me to
