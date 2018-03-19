@@ -7,6 +7,33 @@ Provides a minimal, clean and portable interface for raising exceptions
 with all the advantages of functions over syntax.
 
 
+Why
+---
+
+I want to be able to work with exceptions in a way that is:
+
+1. *Intuitive* to use and see in code.
+2. *Generic* and *flexible*, empowering *reuse*.
+3. *Portable* to all versions of Python I might want to use.
+
+Python is a great language, and modern Python in particular takes a
+nice approach to exceptions.
+
+In my code, I've often found myself writing interaces that combine
+the intuitive nature of Python 3's ``raise`` and ``with_traceback``,
+the generic and flexible pattern of raising exceptions in other
+coroutines or threads of control as exemplified by the ``throw``
+method on Python generators, in the inherently portable and powerfully
+reusable and composable form of a basic function.
+
+The interface provided by this module, the function signature taking
+an ``exception`` (either an instance *or* type) and an optional
+``traceback`` instance, is what I found myself arriving at that met all
+of these criteria. It has served us well in code that I've worked on,
+and I'm submitting it to the world in the hope that others will either
+find it useful and build upon it or point out flaws in my approach.
+
+
 Versioning
 ----------
 
@@ -32,9 +59,33 @@ using Brython or Skulpt or just cannot use ``pip``), see the
 Usage
 -----
 
+Import the ``raise_`` function from the ``raise_`` module:
+
 .. code:: python
 
     from raise_ import raise_
+
+Then you can raise things in a fairly intuitive manner:
+
+1. Raising an exception:
+
+    .. code:: python
+
+        raise_(Exception('foo'))
+
+    You can of course also pass an exception type instead of an
+    exception instance as the first argument to ``except``.
+
+2. Raising an exception with a traceback:
+
+    .. code:: python
+
+        raise_(Exception('foo'), traceback=my_traceback_object)
+
+   ``traceback`` does not have to be passed as a keyword argument, but
+   one advantage of doing so, is that this form (an exception as a
+   positional argument and ``traceback`` as a keyword argument) fits the
+   signature of Python's generator ``throw`` method too.
 
 
 Portability
