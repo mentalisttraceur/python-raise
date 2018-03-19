@@ -22,7 +22,7 @@ nice approach to exceptions.
 In my code, I've often found myself writing interaces that combine
 the intuitive nature of Python 3's ``raise`` and ``with_traceback``,
 the generic and flexible pattern of raising exceptions in other
-coroutines or threads of control as exemplified by the ``throw``
+coroutines or threads of execution as exemplified by the ``throw``
 method on Python generators, in the inherently portable and powerfully
 reusable and composable form of a basic function.
 
