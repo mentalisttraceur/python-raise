@@ -2,7 +2,10 @@
 
 from os import path
 
-from setuptools import setup
+try:
+    from setuptools import setup
+except ImportError:
+    from distutils.core import setup
 
 from raise_ import __doc__, __version__
 
