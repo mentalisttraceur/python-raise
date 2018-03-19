@@ -9,8 +9,11 @@ from raise_ import __doc__, __version__
 project_directory = path.abspath(path.dirname(__file__))
 readme_path = path.join(project_directory, 'README.rst')
 
-with open(readme_path) as readme_file:
+readme_file = open(readme_path)
+try:
     long_description = readme_file.read()
+finally:
+    readme_file.close()
 
 setup(
     name='raise',
