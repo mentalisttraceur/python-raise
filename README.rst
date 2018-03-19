@@ -194,9 +194,22 @@ Design Decisions
     the portability hellscapes of Bourne shell and C: if it differs
     among implementations it *will be* the source of bugs and pain.
 
+* We use two separate implementation files and an ``__init__.py`` that
+  imports one or the other because this avoids using ``exec``.
+
+  We want to avoid using ``exec`` because it brings its own slew of
+  portability problems, because it makes the code messier (nesting code
+  in strings), *and* because I wanted the implementations for each
+  version of the language to be *independently* reusable from a trivial
+  copy.
+
 * We use a ``raise_`` package directory and ``__init__.py`` because it
   makes ``setup.py`` and pip install stupid simple rather than trying
   to figure out a way to only install the right file as ``raise_.py``.
+
+  While I would *love* to implement it so that a ``pip install`` from
+  Python 3 only installed ``raise3.py`` as ``raise_.py``, ditto for 2,
+  this would make the packaging stuff far less trivial.
 
 * ``__init__.py`` tries ``BaseException.with_traceback`` and uses
   ``AttributeError`` to fail instead of ``import raise_.raise2`` and
