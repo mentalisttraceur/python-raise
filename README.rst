@@ -33,6 +33,9 @@ of these criteria. It has served us well in code that I've worked on,
 and I'm submitting it to the world in the hope that others will either
 find it useful and build upon it or point out flaws in my approach.
 
+If you have a more specific "why" question, I recorded my reasons for a
+lot of my specific choices here in the `<Design Decisions>`_ section.
+
 
 Versioning
 ----------
@@ -119,3 +122,94 @@ Both of these methods have the advantage that your code can just do
 ``from raise_ import raise_`` and it'll just work consistently,
 without version-detecting boilerplate or hardcoding the version number
 in the module name (which is an implementation detail).
+
+
+Design Decisions
+----------------
+
+* We allow ``exception`` to be a type instead of an instance, because
+  this is a convention *very* engrained in Python itself.
+
+* We do not currently implement an equivalent to Python 3's ``except
+  ... from ...`` syntax.
+
+  Ultimately, this syntax just assigns one exception as an attribute
+  on another exception.
+
+  This strikes me as *complecting* two different jobs together: raising an
+  exception instance and *initializing* an exception instance with a
+  ``__cause__`` attribute.
+
+  I note that generators' ``throw`` method does not have support for
+  a separe "from"/"cause" argument either, perhaps it should, but then
+  everything implementing this interface would have to implement extra
+  logic to handle that extra argument.
+
+  Instead I would advocate for a separate interface for setting the
+  ``__cause__`` or ``__context__`` attributes on exceptions, such as
+  extending ``BaseException`` with ``with_cause`` and ``with_context``
+  methods.
+
+* We do not use the convention of taking separate ``type`` and ``value``
+  arguments because it seems like a counter-intuitive and inappropriate
+  convention for *raising* an exception.
+  
+  Python 3 dropped support for separate ``type`` and ``value`` from the
+  ``raise`` statement, so it seems enough people responsible for the
+  language already agree with this assessment.
+
+  Also fully/properly supporting all semantics/variations that ``raise``
+  allowed before Python 3 would bloat the code excessively.
+
+* We do not support Python 3's ``__traceback__`` behavior: we do not try
+  to emulate it in Python 2 and we intentionally suppress Python 3's
+  automatic implicit use of ``__traceback__`` when raising, because:
+
+  * When an insufficiently careful coder (almost all of us almost all
+    of the time) has code work one way on one platform, they assume it
+    will work that way consistently on other platforms.
+
+  * Emulating Python 3's behavior on Python 2 creates extra potential
+    for **wrong** behavior: a native ``except`` called between code
+    that uses the emulation will result in references to stale traceback
+    objects on the exception being used.
+
+  * The following two mantras feel like useful heuristics here:
+
+    > Perfection is reached not when there's nothing left to add, but
+    > when there is nothing left to take away.
+
+    and
+
+    > It is far easier to introduce a feature than to remove one.
+
+  * I want to emphasize this again because it's a lesson I learned from
+    the portability hellscapes of Bourne shell and C: if it differs
+    among implementations it *will be* the source of bugs and pain.
+
+* We use a ``raise_`` package directory and ``__init__.py`` because it
+  makes ``setup.py`` and pip install stupid simple rather than trying
+  to figure out a way to only install the right file as ``raise_.py``.
+
+* ``__init__.py`` tries ``BaseException.with_traceback`` and uses
+  ``AttributeError`` to fail instead of ``import raise_.raise2`` and
+  ``SyntaxError`` to fail because it conceptually highlights the
+  primacy of Python 3 as the ought-to-be-default case. Sadly this
+  breaks ``pylint`` on Python 3, but 
+
+* We do not allow ``exception`` or ``traceback`` to be arbitrary
+  callables: Even though it has value for all/most arguments of all/many
+  functions, it is precisely because of this that it is best implemented
+  as a general composable tool (such a as a decorator/wrapper function).
+
+  If done, it ought to be done for both exception and traceback, so not
+  supporting it for one implies not supporting it for the other.
+
+  Not supporting it is reason to not accidentally let it work despite
+  being undocumented, because again, people assume that if it works it
+  is supported.
+
+  This is why the code uses an affirtmative result from ``issubtype``
+  to decide whether to call ``exception`` to construct an instance,
+  instead of any other approach, even though this forces calling
+  ``isinstance`` first to avoid a spurious ``TypeError``.
