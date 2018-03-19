@@ -19,22 +19,22 @@ I want to be able to work with exceptions in a way that is:
 Python is a great language, and modern Python in particular takes a
 nice approach to exceptions.
 
-In my code, I've often found myself writing interaces that combine
+In my code, I've often found myself writing interfaces that combine
 the intuitive nature of Python 3's ``raise`` and ``with_traceback``,
 the generic and flexible pattern of raising exceptions in other
 coroutines or threads of execution as exemplified by the ``throw``
-method on Python generators, in the inherently portable and powerfully
+method on Python generators, and the inherently portable and powerfully
 reusable and composable form of a basic function.
 
 The interface provided by this module, the function signature taking
-an ``exception`` (either an instance *or* type) and an optional
+an ``exception`` (either an instance *or* a type) and an optional
 ``traceback`` instance, is what I found myself arriving at that met all
-of these criteria. It has served us well in code that I've worked on,
+of these criteria. It has served me well in code that I've worked on,
 and I'm submitting it to the world in the hope that others will either
 find it useful and build upon it or point out flaws in my approach.
 
 If you have a more specific "why" question, I recorded my reasons for a
-lot of my specific choices here in the `<Design Decisions>`_ section.
+lot of the specific choices here in the `Design Decisions`_ section.
 
 
 Versioning
@@ -56,7 +56,7 @@ Installation
 
 **If** you need or want to get it *manually* (for example if you're
 using Brython or Skulpt or just cannot use ``pip``), see the
-`<Advanced/Manual Installation>`_ section for suggestions/tips.
+`Advanced/Manual Installation`_ section for suggestions/tips.
 
 
 Usage
@@ -77,7 +77,7 @@ Then you can raise things in a fairly intuitive manner:
         raise_(Exception('foo'))
 
     You can of course also pass an exception type instead of an
-    exception instance as the first argument to ``except``.
+    exception instance as the first argument to ``except_``.
 
 2. Raising an exception with a traceback:
 
@@ -128,7 +128,7 @@ Design Decisions
 ----------------
 
 * We allow ``exception`` to be a type instead of an instance, because
-  this is a convention *very* engrained in Python itself.
+  this is a convention *very* ingrained in Python itself.
 
 * We do not currently implement an equivalent to Python 3's ``except
   ... from ...`` syntax.
