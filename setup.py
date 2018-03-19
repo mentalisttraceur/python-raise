@@ -9,7 +9,7 @@ from raise_ import __doc__, __version__
 project_directory = path.abspath(path.dirname(__file__))
 readme_path = path.join(project_directory, 'README.rst')
 
-with open(readme_path, encoding='utf-8') as readme_file:
+with open(readme_path) as readme_file:
     long_description = readme_file.read()
 
 setup(
