@@ -183,12 +183,12 @@ Design Decisions
 
   * The following two mantras feel like useful heuristics here:
 
-    > Perfection is reached not when there's nothing left to add, but
-    > when there is nothing left to take away.
+      Perfection is reached not when there's nothing left to add, but
+      when there is nothing left to take away.
 
     and
 
-    > It is far easier to introduce a feature than to remove one.
+      It is far easier to introduce a feature than to remove one.
 
   * I want to emphasize this again because it's a lesson I learned from
     the portability hellscapes of Bourne shell and C: if it differs
