@@ -229,7 +229,7 @@ Design Decisions
   being undocumented, because again, people assume that if it works it
   is supported.
 
-  This is why the code uses an affirtmative result from ``issubtype``
+  This is why the code uses an affirmative result from ``issubtype``
   to decide whether to call ``exception`` to construct an instance,
   instead of any other approach, even though this forces calling
   ``isinstance`` first to avoid a spurious ``TypeError``.
