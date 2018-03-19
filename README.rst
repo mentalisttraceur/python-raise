@@ -123,6 +123,13 @@ Both of these methods have the advantage that your code can just do
 without version-detecting boilerplate or hardcoding the version number
 in the module name (which is an implementation detail).
 
+You are of course welcome to just copy-paste the tiny ``raise_``
+function definition into your code, which you might have to do in a
+runtime like Skulpt, but keep in mind the compatibility issues involved:
+your code will only work without modification on Python versions
+compatible with the version you chose, and Python 2's version causes a
+SyntaxError in Python 3, which is uncatchable within the same file.
+
 
 Design Decisions
 ----------------
