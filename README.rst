@@ -72,18 +72,18 @@ Then you can raise things in a fairly intuitive manner:
 
 1. Raising an exception:
 
-    .. code:: python
+   .. code:: python
 
-        raise_(Exception('foo'))
+       raise_(Exception('foo'))
 
-    You can of course also pass an exception type instead of an
-    exception instance as the first argument to ``except_``.
+   You can of course also pass an exception type instead of an
+   exception instance as the first argument to ``except_``.
 
 2. Raising an exception with a traceback:
 
-    .. code:: python
+   .. code:: python
 
-        raise_(Exception('foo'), traceback=my_traceback_object)
+       raise_(Exception('foo'), traceback=my_traceback_object)
 
    ``traceback`` does not have to be passed as a keyword argument, but
    one advantage of doing so, is that this form (an exception as a
