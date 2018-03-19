@@ -148,7 +148,7 @@ Design Decisions
   ``__cause__`` attribute.
 
   I note that generators' ``throw`` method does not have support for
-  a separe "from"/"cause" argument either, perhaps it should, but then
+  a separe "from"/"cause" argument either. Perhaps it should, but then
   everything implementing this interface would have to implement extra
   logic to handle that extra argument.
 
