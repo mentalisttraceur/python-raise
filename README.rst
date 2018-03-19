@@ -52,7 +52,7 @@ Installation
 
 ::
 
-    pip install raise_
+    pip install raise
 
 **If** you need or want to get it *manually* (for example if you're
 using Brython or Skulpt or just cannot use ``pip``), see the
