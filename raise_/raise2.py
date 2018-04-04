@@ -20,7 +20,7 @@ with all the advantages of functions over syntax.
 
 
 __all__ = ('raise_',)
-__version__ = '1.0.0'
+__version__ = '1.0.1'
 
 
 def raise_(exception, traceback=None):
@@ -32,6 +32,4 @@ def raise_(exception, traceback=None):
             or an exception type, which is constructed when needed.
         traceback (Optional[TracebackType]): Traceback to raise with.
     """
-    if isinstance(exception, type) and issubclass(exception, BaseException):
-        exception = exception()
     raise exception, None, traceback
