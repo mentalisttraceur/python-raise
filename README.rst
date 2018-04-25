@@ -94,12 +94,13 @@ Then you can raise things in a fairly intuitive manner:
 Portability
 -----------
 
-Portable to all releases of both Python 3 and Python 2 back to 2.5,
-when ``BaseException`` was first added.
+Portable to all releases of both Python 3 and Python 2.
 
-(If you polyfill ``BaseException`` globally and/or make it fallback to
-using ``Exception`` when ``BaseException`` doesn't exist, it will likely
-work on all Python 2 versions and probably on even earlier versions.)
+(The oldest tested is 2.5, but it will likely work on all Python 2
+versions and probably on even earlier versions.)
+
+Known not to work: MicroPython and Skulpt, both of which do not support
+the `with_traceback` exception method or the `raise e, None, tb` syntax.
 
 
 Advanced/Manual Installation
