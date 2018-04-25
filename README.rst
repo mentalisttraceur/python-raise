@@ -55,7 +55,7 @@ Installation
     pip install raise
 
 **If** you need or want to get it *manually* (for example if you're
-using Brython or Skulpt or just cannot use ``pip``), see the
+using Brython or just cannot use ``pip``), see the
 `Advanced/Manual Installation`_ section for suggestions/tips.
 
 
@@ -124,11 +124,11 @@ without version-detecting boilerplate or hardcoding the version number
 in the module name (which is an implementation detail).
 
 You are of course welcome to just copy-paste the tiny ``raise_``
-function definition into your code, which you might have to do in a
-runtime like Skulpt, but keep in mind the compatibility issues involved:
-your code will only work without modification on Python versions
-compatible with the version you chose, and Python 2's version causes a
-SyntaxError in Python 3, which is uncatchable within the same file.
+function definition into your code, just keep in mind the compatibility
+issues involved: your code will only work without modification on Python
+versions compatible with the version you chose, and Python 2's version
+causes a SyntaxError in Python 3, which is uncatchable within the same
+file.
 
 
 Design Decisions
