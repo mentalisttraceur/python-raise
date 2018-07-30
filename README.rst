@@ -77,7 +77,7 @@ Then you can raise things in a fairly intuitive manner:
        raise_(Exception('foo'))
 
    You can of course also pass an exception type instead of an
-   exception instance as the first argument to ``except_``.
+   exception instance as the first argument to ``raise_``.
 
 2. Raising an exception with a traceback:
 
