@@ -26,7 +26,7 @@ __version__ = '1.1.0'
 def raise_(exception, traceback=None):
     """Raise an exception, optionally with a custom traceback.
 
-    Args:
+    Arguments:
         exception (Union[BaseException, type]): The exception to raise.
             Can be an exception instance, which is raised directly,
             or an exception type, which is constructed when needed.
