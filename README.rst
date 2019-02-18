@@ -100,7 +100,7 @@ Portable to all releases of both Python 3 and Python 2.
 versions and probably on even earlier versions.)
 
 For implementations of Python that do not support raising with a custom
-traceback, a "no traceback" variant can be installed separately.
+traceback, a "no traceback" variant can be installed manually.
 
 
 Advanced/Manual Installation
@@ -119,9 +119,9 @@ on your needs:
    work with both Python 3 and Python 2 and older, copy the whole
    ``raise_`` directory.
 
-3. If you're using a Python implementation that do not support raising
-   with a custom traceback, take the ``raise_no_traceback.py`` file and
-   sace it *as* ``raise_.py``.
+3. If you're using a Python implementation that does not support raising
+   exceptions with a custom traceback, take the ``raise_no_traceback.py``
+   file and save it *as* ``raise_.py``.
 
 All of these methods have the advantage that your code can just do
 ``from raise_ import raise_`` and it'll just work consistently,
