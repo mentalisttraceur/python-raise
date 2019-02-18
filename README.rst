@@ -139,10 +139,10 @@ file.
 Design Decisions
 ----------------
 
-* We allow ``exception`` to be either an instance or a type, because this
+* Allow ``exception`` to be either an instance or a type, because this
   convention is *very* ingrained in Python.
 
-* We do not currently implement an equivalent to Python 3's ``except
+* Do not currently implement an equivalent to Python 3's ``except
   ... from ...`` syntax.
 
   Ultimately, this syntax just assigns one exception as an attribute
@@ -158,11 +158,11 @@ Design Decisions
   logic to handle that extra argument.
 
   Instead I would advocate for a separate interface for setting the
-  ``__cause__`` or ``__context__`` attributes on exceptions, such as
+  ``__cause__`` or ``__context__`` attributes on exceptions such as
   extending ``BaseException`` with ``with_cause`` and ``with_context``
   methods.
 
-* We do not use the convention of taking separate ``type`` and ``value``
+* Do not use the convention of taking separate ``type`` and ``value``
   arguments because it seems like a counter-intuitive and inappropriate
   convention for *raising* an exception.
   
@@ -173,7 +173,7 @@ Design Decisions
   Also fully/properly supporting all semantics/variations that ``raise``
   allowed before Python 3 would bloat the code excessively.
 
-* We do not support Python 3's ``__traceback__`` behavior: we do not try
+* Do not support Python 3's ``__traceback__`` behavior: we do not try
   to emulate it in Python 2 and we intentionally suppress Python 3's
   automatic implicit use of ``__traceback__`` when raising, because:
 
@@ -199,8 +199,8 @@ Design Decisions
     the portability hellscapes of Bourne shell and C: if it differs
     among implementations it *will be* the source of bugs and pain.
 
-* We use two separate implementation files and an ``__init__.py`` that
-  imports one or the other because this avoids using ``exec``.
+* Using two separate implementation files and an ``__init__.py`` that
+  imports one or the other avoids using ``exec``.
 
   We want to avoid using ``exec`` because it brings its own slew of
   portability problems, because it makes the code messier (nesting code
@@ -208,7 +208,7 @@ Design Decisions
   version of the language to be *independently* reusable from a trivial
   copy.
 
-* We use a ``raise_`` package directory and ``__init__.py`` because it
+* Using a ``raise_`` package directory and ``__init__.py`` because it
   makes ``setup.py`` and pip install stupid simple rather than trying
   to figure out a way to only install the right file as ``raise_.py``.
 
@@ -221,9 +221,9 @@ Design Decisions
   ``SyntaxError`` to fail because it conceptually highlights the
   primacy of Python 3 as the ought-to-be-default case.
 
-  I also think it's conceptually cleaner to *not* waste Python's time
-  parsing and interpreting a file only for it to abort on a syntax
-  error. Performance-wise it's negligible and thus a non-issue though.
+  I also think it's *conceptually* cleaner to *not* first parse and
+  interpret a file only to abort on a syntax error. Performance-wise
+  it's negligible and thus a non-issue though.
 
   Sadly this breaks ``pylint`` on Python 3, because it unconditionally
   imports the `raise2` and aborts upon getting the syntax error. But on
@@ -236,10 +236,10 @@ Design Decisions
   justify throwing in some linter-specific disabling comment just to
   quell one spurious warning in an otherwise ``flake8``-silent file.
 
-* We do not allow ``exception`` or ``traceback`` to be arbitrary
-  callables: Even though it has value for all/most arguments of all/many
-  functions, it is precisely because of this that it is best implemented
-  as a general composable tool (such a as a decorator/wrapper function).
+* Not allowing ``exception`` or ``traceback`` to be arbitrary callables:
+  Even though it has value for all/most arguments of all/many functions,
+  it is precisely because of this that it is best implemented as a
+  general composable tool (such a as a decorator/wrapper function).
 
   If done, it ought to be done for both exception and traceback, so not
   supporting it for one implies not supporting it for the other.
