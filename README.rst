@@ -248,3 +248,19 @@ Design Decisions
   to decide whether to call ``exception`` to construct an instance,
   instead of any other approach, even though this forces calling
   ``isinstance`` first to avoid a spurious ``TypeError``.
+
+* To aid portability of code to Python implementations that do not
+  support specifying a custom traceback when raising, allowing
+  ``traceback`` to be silently accepted but ignored helps writing code
+  that portably follows "progressive enhancement" or "graceful
+  degradation" practices: tracebacks are properly used where possible,
+  but ignored where not.
+
+  This is **not** always the wisest choice: some features and behavior
+  are relied on for security, correctness, or debugging, and in those
+  cases the inability to fulfill the contract of an interface must not
+  be silently hidden.
+
+  Because of this, the "no traceback" variant is "opt-in": if you're
+  using it, you deliberately included it into your project, or a
+  dependency of yours did.
