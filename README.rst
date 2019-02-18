@@ -54,9 +54,9 @@ Installation
 
     pip install raise
 
-**If** you need or want to get it *manually* (for example if you're
-using Brython or just cannot use ``pip``), see the
-`Advanced/Manual Installation`_ section for suggestions/tips.
+**If** you need or want to get it *manually*, or you need the "no
+traceback" variant, see the `Advanced/Manual Installation`_ section
+for suggestions/tips.
 
 
 Usage
@@ -99,14 +99,14 @@ Portable to all releases of both Python 3 and Python 2.
 (The oldest tested is 2.5, but it will likely work on all Python 2
 versions and probably on even earlier versions.)
 
-Known not to work: MicroPython and Skulpt, both of which do not support
-the `with_traceback` exception method or the `raise e, None, tb` syntax.
+For implementations of Python that do not support raising with a custom
+traceback, a "no traceback" variant can be installed separately.
 
 
 Advanced/Manual Installation
 ----------------------------
 
-There are two recommended ways of installing this manually, depending
+There are three recommended ways of installing this manually, depending
 on your needs:
 
 1. If you're installing it into the library path for your Python system
@@ -119,7 +119,11 @@ on your needs:
    work with both Python 3 and Python 2 and older, copy the whole
    ``raise_`` directory.
 
-Both of these methods have the advantage that your code can just do
+3. If you're using a Python implementation that do not support raising
+   with a custom traceback, take the ``raise_no_traceback.py`` file and
+   sace it *as* ``raise_.py``.
+
+All of these methods have the advantage that your code can just do
 ``from raise_ import raise_`` and it'll just work consistently,
 without version-detecting boilerplate or hardcoding the version number
 in the module name (which is an implementation detail).
