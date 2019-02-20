@@ -83,12 +83,7 @@ Then you can raise things in a fairly intuitive manner:
 
    .. code:: python
 
-       raise_(Exception('foo'), traceback=my_traceback_object)
-
-   ``traceback`` does not have to be passed as a keyword argument, but
-   one advantage of doing so, is that this form (an exception as a
-   positional argument and ``traceback`` as a keyword argument) fits the
-   signature of Python's generator ``throw`` method too.
+       raise_(Exception('foo'), my_traceback_object)
 
 
 Portability
