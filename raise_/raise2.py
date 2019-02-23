@@ -20,7 +20,7 @@ with all the advantages of functions over syntax.
 
 
 __all__ = ('raise_',)
-__version__ = '1.1.0'
+__version__ = '1.1.1'
 
 
 def raise_(exception, traceback=None):
@@ -32,4 +32,7 @@ def raise_(exception, traceback=None):
             or an exception type, which is constructed when needed.
         traceback (Optional[TracebackType]): Traceback to raise with.
     """
-    raise exception, None, traceback
+    try:
+        raise exception, None, traceback
+    finally:
+        exception = traceback = None
