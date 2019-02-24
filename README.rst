@@ -263,3 +263,23 @@ Design Decisions
   Because of this, the "no traceback" variant is "opt-in": if you're
   using it, you deliberately included it into your project, or a
   dependency of yours did.
+
+* Null out *both* arguments in the ``finally`` inside of ``raise_``
+  to alleviate the potential for reference cycles being made by the
+  traceback, which references all locals in each stack frame.
+
+  ``traceback`` is obvious: it will cyclically reference itself.
+
+  ``exception`` **might** reference ``traceback`` either directly or
+  indirectly, and we have no way to know for sure that it doesn't.
+
+* Not nulling out the arguments to ``raise_`` in the "no traceback"
+  variant because the reference cycle depends on having a reference
+  to the traceback data within the call stack itself.
+
+  Also, Python implementations that need the "no traceback" variant
+  tend to be diversely incompatible: even ``try``-``finally`` does
+  not work in all of them.
+
+  So it seems like the "no traceback" variant doesn't need this fix,
+  and it is a safer bet to not mess with it until a need is found.
