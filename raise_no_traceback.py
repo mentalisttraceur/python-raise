@@ -33,10 +33,8 @@ def raise_(exception, traceback=None):
     """Raise an exception, optionally with a custom traceback.
 
     Arguments:
-        exception (Union[BaseException, type]): The exception to raise.
-            Can be an exception instance, which is raised directly,
-            or an exception type, which is constructed when needed.
-        traceback (Optional[TracebackType]): Traceback to raise with.
+        exception: The exception instance or type to raise.
+        traceback (optional): Traceback to raise the exception with.
 
     Note:
         This "no traceback" variant, meant for Python implementations
