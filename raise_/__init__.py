@@ -24,9 +24,7 @@ __all__ = ('raise_',)
 
 try:
     BaseException.with_traceback
-except NameError:
-    from raise_.raise2 import raise_, __version__
-except AttributeError:
+except (NameError, AttributeError):
     from raise_.raise2 import raise_, __version__
 else:
     from raise_.raise3 import raise_, __version__
