@@ -153,9 +153,7 @@ Design Decisions
   logic to handle that extra argument.
 
   Instead I would advocate for a separate interface for setting the
-  ``__cause__`` or ``__context__`` attributes on exceptions such as
-  extending ``BaseException`` with ``with_cause`` and ``with_context``
-  methods.
+  ``__cause__`` or ``__context__`` attributes on exceptions.
 
 * Do not use the convention of taking separate ``type`` and ``value``
   arguments because it seems like a counter-intuitive and inappropriate
@@ -197,11 +195,13 @@ Design Decisions
 * Using two separate implementation files and an ``__init__.py`` that
   imports one or the other avoids using ``exec``.
 
-  We want to avoid using ``exec`` because it brings its own slew of
-  portability problems, because it makes the code messier (nesting code
-  in strings), *and* because I wanted the implementations for each
-  version of the language to be *independently* reusable from a trivial
-  copy.
+  I want to avoid using ``exec`` because
+
+  1. nesting code in strings makes the code less readable and harder to
+     consciously verify, *and*
+
+  2. I wanted the implementations for each version of the language to
+     be *independently* reusable from a trivial copy-paste.
 
 * Using a ``raise_`` package directory and ``__init__.py`` because it
   makes ``setup.py`` and pip install stupid simple rather than trying
@@ -212,9 +212,9 @@ Design Decisions
   this would make the packaging stuff far less trivial.
 
 * ``__init__.py`` tries ``BaseException.with_traceback`` and uses
-  ``AttributeError`` to fail instead of ``import raise_.raise2`` and
-  ``SyntaxError`` to fail because it conceptually highlights the
-  primacy of Python 3 as the ought-to-be-default case.
+  ``NameError`` and ``AttributeError`` to fail instead of ``import
+  raise_.raise2`` and ``SyntaxError`` to fail because it conceptually
+  highlights the primacy of Python 3 as the ought-to-be-default case.
 
   I also think it's *conceptually* cleaner to *not* first parse and
   interpret a file only to abort on a syntax error. Performance-wise
