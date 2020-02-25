@@ -3,8 +3,8 @@ Python ``raise`` as a Function
 
 Raise exceptions with a function instead of a statement.
 
-Provides a minimal, clean and portable interface for raising exceptions
-with all the advantages of functions over syntax.
+Provides a minimal, clean and portable interface for raising
+exceptions with all the advantages of functions over syntax.
 
 
 Why
