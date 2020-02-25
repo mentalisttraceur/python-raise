@@ -283,3 +283,23 @@ Design Decisions
 
   So it seems like the "no traceback" variant doesn't need this fix,
   and it is a safer bet to not mess with it until a need is found.
+
+
+Scope
+-----
+
+This package provides the *bare minimum* needed to support the
+"``raise`` as a function" approach *portably* and *correctly*.
+
+In particular, Python syntax for raising an exception with
+a custom traceback is simply incompatible between Python 3
+and Python 2, and the only way around it is **both**
+
+1. separate importable files *or* ``eval``, and
+2. catching syntax errors *or* version checking.
+
+So code belongs in here if it protects users from having to code
+workarounds at least approximately that bad, for problems that
+cannot be better solved by a different design or library.
+
+Everything beyond that is probably out-of-scope.
