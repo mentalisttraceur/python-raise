@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
+import errno
 import os
+import sys
 
 try:
     from setuptools import setup
@@ -17,6 +19,27 @@ try:
     long_description = readme_file.read()
 finally:
     readme_file.close()
+
+if 'sdist' in sys.argv:
+    # When building a source distribution, we need to include the
+    # full package with both versions: Python 3 and Python 2.
+    kwargs = {'packages': ['raise_']}
+else:
+    # When not building a source distribution, we can include
+    # just the file for the matching Python version.
+    kwargs = {'py_modules': ['raise_']}
+
+    packaged_path = os.path.join(project_directory, 'raise_.py')
+    if sys.version_info >= (3,):
+        source_path = os.path.join(project_directory, 'raise_/raise3.py')
+    else:
+        source_path = os.path.join(project_directory, 'raise_/raise2.py')
+    try:
+        os.unlink(packaged_path)
+    except OSError as error:
+        if error.errno != errno.ENOENT:
+            raise
+    os.link(source_path, packaged_path)
 
 setup(
     name='raise',
@@ -52,5 +75,5 @@ setup(
         'Programming Language :: Python :: Implementation :: Stackless',
         'Operating System :: OS Independent',
     ],
-    packages=['raise_'],
+    **kwargs
 )
