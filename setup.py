@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from os import path
+import os
 
 try:
     from setuptools import setup
@@ -9,8 +9,8 @@ except ImportError:
 
 from raise_ import __doc__, __version__
 
-project_directory = path.abspath(path.dirname(__file__))
-readme_path = path.join(project_directory, 'README.rst')
+project_directory = os.path.abspath(os.path.dirname(__file__))
+readme_path = os.path.join(project_directory, 'README.rst')
 
 readme_file = open(readme_path)
 try:
