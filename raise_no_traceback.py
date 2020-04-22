@@ -37,8 +37,8 @@ def raise_(exception, traceback=None):
         traceback (optional): Traceback to raise the exception with.
 
     Note:
-        This "no traceback" variant, meant for Python implementations
-        that do not support using a custom traceback when raising,
-        silently ignores the ``traceback`` argument.
+        This "no traceback" variant silently ignores the ``traceback``
+        argument, because it is meant for Python implementations
+        that do not support using a custom traceback when raising.
     """
     raise exception
