@@ -9,7 +9,7 @@ try:
 except ImportError:
     from distutils.core import setup
 
-from raise_ import __doc__, __version__
+from raise_3 import __doc__, __version__
 
 project_directory = os.path.abspath(os.path.dirname(__file__))
 readme_path = os.path.join(project_directory, 'README.rst')
@@ -23,17 +23,17 @@ finally:
 if 'sdist' in sys.argv:
     # When building a source distribution, we need to include the
     # full package with both versions: Python 3 and Python 2.
-    kwargs = {'packages': ['raise_']}
+    modules = ['raise_3', 'raise_2', 'raise_no_traceback']
 else:
     # When not building a source distribution, we can include
     # just the file for the matching Python version.
-    kwargs = {'py_modules': ['raise_']}
+    modules = ['raise_']
 
     packaged_path = os.path.join(project_directory, 'raise_.py')
     if sys.version_info >= (3,):
-        source_path = os.path.join(project_directory, 'raise_/raise3.py')
+        source_path = os.path.join(project_directory, 'raise_3.py')
     else:
-        source_path = os.path.join(project_directory, 'raise_/raise2.py')
+        source_path = os.path.join(project_directory, 'raise_2.py')
     try:
         os.unlink(packaged_path)
     except OSError as error:
@@ -56,5 +56,5 @@ setup(
         'Programming Language :: Python :: 2',
         'Operating System :: OS Independent',
     ],
-    **kwargs
+    py_modules=modules,
 )

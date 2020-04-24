@@ -5,5 +5,5 @@ default:
 	python3 setup.py bdist_wheel
 
 clean:
-	rm -rf raise_/__pycache__ build raise.egg-info dist
-	rm -f raise_/*.py[oc] raise_.py
+	rm -rf __pycache__ build raise.egg-info dist
+	rm -f *.py[oc] raise_.py
