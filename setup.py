@@ -43,7 +43,7 @@ else:
 
 setup(
     name='raise',
-    version=__version__ + '.post1',
+    version=__version__,
     description=__doc__.split('\n')[0],
     long_description=long_description,
     license='0BSD',
