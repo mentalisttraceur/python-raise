@@ -13,18 +13,15 @@ Why
 I want to be able to work with exceptions in a way that is:
 
 1. *Intuitive* to use and see in code.
-2. *Generic* and *flexible*, empowering *reuse*.
+2. *Generic* and *flexible*, empowering *reuse* and *composition*.
 3. *Portable* to all versions of Python I might want to use.
-
-Python is a great language, and modern Python in particular takes a
-nice approach to exceptions.
 
 In my code, I've often found myself writing interfaces that combine
 the intuitive nature of Python 3's ``raise`` and ``with_traceback``,
 the generic and flexible pattern of raising exceptions in other
 coroutines or threads of execution as exemplified by the ``throw``
-method on Python generators, and the inherently portable and powerfully
-reusable and composable form of a basic function.
+method on Python generators, and the inherently portable and
+powerfully reusable and composable form of a basic function.
 
 The interface provided by this module, the function signature taking
 an ``exception`` (either an instance *or* a type) and an optional
@@ -54,9 +51,9 @@ Installation
 
     pip install raise
 
-**If** you need or want to get it *manually*, or you need the "no
-traceback" variant, see the `Advanced/Manual Installation`_ section
-for suggestions/tips.
+**If** you need or want to get it *manually*, or you need
+the "no traceback" variant, see the `Advanced/Manual
+Installation`_ section for suggestions/tips.
 
 
 Usage
@@ -68,7 +65,7 @@ Import the ``raise_`` function from the ``raise_`` module:
 
     from raise_ import raise_
 
-Then you can raise things in a fairly intuitive manner:
+Then you can raise things as you'd expect:
 
 1. Raising an exception:
 
@@ -76,8 +73,8 @@ Then you can raise things in a fairly intuitive manner:
 
        raise_(Exception('foo'))
 
-   You can of course also pass an exception type instead of an
-   exception instance as the first argument to ``raise_``.
+   (You can also pass an exception type instead of an
+   instance as the first argument to ``raise_``.)
 
 2. Raising an exception with a traceback:
 
@@ -91,8 +88,8 @@ Portability
 
 Portable to all releases of both Python 3 and Python 2.
 
-(The oldest tested is 2.5, but it will likely work on all Python 2
-versions and probably on even earlier versions.)
+(The oldest tested is 2.5, but it will likely work on all
+Python 2 versions and probably on even earlier versions.)
 
 For implementations of Python that do not support raising with a custom
 traceback, a "no traceback" variant can be installed manually.
@@ -104,149 +101,134 @@ Advanced/Manual Installation
 There are three recommended ways of installing this manually, depending
 on your needs:
 
-1. If you're installing it into the library path for your Python system
-   as a whole or adding it into the source tree of a project that is
-   not meant to be compatible to both Python 3 and Python 2 or older,
-   you can just take either ``raise3.py`` or ``raise2.py`` and save it
-   *as* ``raise_.py``.
+1. If it does **not** need to be imported by different incompatible
+   Python versions, then you can just take either ``raise_3.py`` or
+   ``raise_2.py`` and save it as ``raise_.py``.
 
-2. If you're adding it into the source tree of a project that should
-   work with both Python 3 and Python 2 and older, copy the whole
-   ``raise_`` directory.
-
-3. If you're using a Python implementation that does not support raising
+2. If you're using a Python implementation that does not support raising
    exceptions with a custom traceback, take the ``raise_no_traceback.py``
-   file and save it *as* ``raise_.py``.
+   file and save it as ``raise_.py``.
 
-All of these methods have the advantage that your code can just do
-``from raise_ import raise_`` and it'll just work consistently,
-without version-detecting boilerplate or hardcoding the version number
-in the module name (which is an implementation detail).
+3. If you need the same file to be importable into more than one of the
+   above, combine the files you need either into one ``raise_.py`` file
+   or into one ``raise_`` directory with an ``__init__.py``.
 
-You are of course welcome to just copy-paste the tiny ``raise_``
-function definition into your code, just keep in mind the compatibility
-issues involved: your code will only work without modification on Python
+That way you can always do ``from raise_ import raise_`` and it'll
+just work, without version-detecting boilerplate or the file names
+(which are an implementation detail) leaking into your other code.
+
+You are of course welcome to just copy-paste the tiny ``raise_`` function
+definition into your code, just keep in mind the compatibility issues
+involved: your code will only work without modification on Python
 versions compatible with the version you chose, and Python 2's version
-causes a SyntaxError in Python 3, which is uncatchable within the same
-file.
+causes a SyntaxError in Python 3, which is uncatchable unless you import
+it from another file or wrap that function definition in an ``exec``.
 
 
 Design Decisions
 ----------------
 
-* Allow ``exception`` to be either an instance or a type, because this
-  convention is *very* ingrained in Python.
+* Allowing ``exception`` to be either an instance or a type, because
+  it is sometimes useful and is *very* ingrained in Python.
 
-* Do not currently implement an equivalent to Python 3's ``except
-  ... from ...`` syntax.
+* Not currently implementing an equivalent to
+  Python 3's ``except ... from ...`` syntax.
 
-  Ultimately, this syntax just assigns one exception as an attribute
-  on another exception.
+  Ultimately, this syntax just assigns one exception
+  as an attribute on another exception.
 
-  This strikes me as *complecting* two different jobs together: raising an
-  exception instance and *initializing* an exception instance with a
-  ``__cause__`` attribute.
+  This strikes me as *complecting* two different jobs together:
+  raising an exception instance and *initializing* an
+  exception instance with a ``__cause__`` attribute.
 
-  I note that generators' ``throw`` method does not have support for
-  a separe "from"/"cause" argument either. Perhaps it should, but then
-  everything implementing this interface would have to implement extra
-  logic to handle that extra argument.
+  I note that generators' ``throw`` method does not have support
+  for a separe "from"/"cause" argument either. Perhaps it should,
+  but then everything implementing this interface would have to
+  implement extra logic to handle that extra argument.
 
   Instead I would advocate for a separate interface for setting the
   ``__cause__`` or ``__context__`` attributes on exceptions.
 
-* Do not use the convention of taking separate ``type`` and ``value``
-  arguments because it seems like a counter-intuitive and inappropriate
-  convention for *raising* an exception.
+* Not using the convention of taking separate ``type`` and ``value``
+  arguments because it seems like a counter-intuitive and
+  inappropriate convention for *raising* an exception.
+  (It is a good pattern for functions that *receive* exceptions.)
   
-  Python 3 dropped support for separate ``type`` and ``value`` from the
-  ``raise`` statement, so it seems enough people responsible for the
-  language already agree with this assessment.
+  Python 3 dropped support for separate ``type`` and ``value``
+  from the ``raise`` statement, so it seems enough people
+  responsible for the language agree with this assessment.
 
   Also fully/properly supporting all semantics/variations that ``raise``
   allowed before Python 3 would bloat the code excessively.
 
-* Do not support Python 3's ``__traceback__`` behavior: we do not try
-  to emulate it in Python 2 and we intentionally suppress Python 3's
-  automatic implicit use of ``__traceback__`` when raising, because:
+* Not supporting Python 3's behavior of using the exception's
+  ``__traceback__`` attribute as the traceback to raise with
+  by default if no traceback is specified.
 
-  * When an insufficiently careful coder (almost all of us almost all
-    of the time) has code work one way on one platform, they assume it
-    will work that way consistently on other platforms.
+  Not trying to emulate it in Python 2 and intentionally suppressing
+  it in Python 3 by always calling ``.with_traceback`` and using
+  ``None`` as the default traceback argument, because:
 
-  * Emulating Python 3's behavior on Python 2 creates extra potential
-    for **wrong** behavior: a native ``except`` called between code
-    that uses the emulation will result in references to stale traceback
-    objects on the exception being used.
+  1. When an insufficiently careful coder (almost all of us almost all
+     of the time) has code work one way on one platform, they assume
+     it will work that way consistently on other platforms.
 
-  * The following two mantras feel like useful heuristics here:
+  2. Not suppressing this behavior requires more code and complicating
+     the interface - some other default value for the traceback
+     argument besides ``None`` is needed instead (``...``, also known
+     as ``Ellipsis``, is a good candidate).
 
-      Perfection is reached not when there's nothing left to add, but
-      when there is nothing left to take away.
+  3. Emulating Python 3's behavior on Python 2, would create extra
+     potential for **wrong** behavior: any ``except`` that catches
+     an exception without updating the ``__traceback__`` before
+     passing it to code that relies on it will result in really
+     misleading gaps in the traceback.
 
-    and
+  4. Emulating Python 3's behavior on the "no traceback" Python
+     implementations has similar problems, except worse: some
+     of those Python implementations don't even have a way of
+     adding attributes to native exceptions, so the would be
+     more code to achieve it and more edge cases to consider.
 
-      It is far easier to introduce a feature than to remove one.
+  5. If it differs across implementations, people will make mistakes.
+     Simplicity and consistency that covers most cases is valuable.
+     Portable correctness is a priority goal here. Gracefully
+     degrading in this case would risk correctness and debugging.
 
-  * I want to emphasize this again because it's a lesson I learned from
-    the portability hellscapes of Bourne shell and C: if it differs
-    among implementations it *will be* the source of bugs and pain.
+* Using different implementation files for Python 3+, Python 2-,
+  and "no traceback" Python implementations because:
 
-* Using two separate implementation files and an ``__init__.py`` that
-  imports one or the other avoids using ``exec``.
+  1. nesting code in `exec` makes the code less readable and
+     harder to consciously and programmmatically verify,
 
-  I want to avoid using ``exec`` because
+  2. I wanted the implementations for each version of the language
+     to be *independently* reusable from a mere copy-paste,
 
-  1. nesting code in strings makes the code less readable and harder to
-     consciously verify, *and*
+  3. not conditionally picking the implementation
+     means less code surface area for bugs, *and*
 
-  2. I wanted the implementations for each version of the language to
-     be *independently* reusable from a trivial copy-paste.
+  4. it allows for cleaner packages and installs.
 
-* Using a ``raise_`` package directory and ``__init__.py`` because it
-  makes ``setup.py`` and pip install stupid simple rather than trying
-  to figure out a way to only install the right file as ``raise_.py``.
+* Not providing a single file which can be imported on some permutation
+  of Python 3+, Python 2-, and "no traceback" Python implementations -
+  for now - because the need for each permutation seems improbable,
+  neither permutation is particularly more likely, and it is fairly
+  easy for a developer to combine the files as needed if it comes up.
 
-  While I would *love* to implement it so that a ``pip install`` from
-  Python 3 only installed ``raise3.py`` as ``raise_.py``, ditto for 2,
-  this would make the packaging stuff far less trivial.
+* Using an affirmative result from ``issubtype`` to decide whether to
+  call ``exception`` to construct an instance, even though this
+  forces calling ``isinstance`` first to avoid a spurious ``TypeError``,
+  because otherwise arbitrary callables would work for ``exception``,
+  instead of only exceptions.
 
-* ``__init__.py`` tries ``BaseException.with_traceback`` and uses
-  ``NameError`` and ``AttributeError`` to fail instead of ``import
-  raise_.raise2`` and ``SyntaxError`` to fail because it conceptually
-  highlights the primacy of Python 3 as the ought-to-be-default case.
+  This might seem useful in a "why not leave it in?" way, but then
+  it would be inconsistent with that not working for ``traceback``.
 
-  I also think it's *conceptually* cleaner to *not* first parse and
-  interpret a file only to abort on a syntax error. Performance-wise
-  it's negligible and thus a non-issue though.
-
-  Sadly this breaks ``pylint`` on Python 3, because it unconditionally
-  imports the `raise2` and aborts upon getting the syntax error. But on
-  a tiny module like this, that's not a major issue. I manually worked
-  around it to run ``pylint`` by commenting out the offending import,
-  and I don't foresee enough changes to make that a hassle.
-
-* We don't do anything about ``flake8`` complaining that ``__version__``
-  is imported but not used because this module is too tiny for me to
-  justify throwing in some linter-specific disabling comment just to
-  quell one spurious warning in an otherwise ``flake8``-silent file.
-
-* Not allowing ``exception`` or ``traceback`` to be arbitrary callables:
-  Even though it has value for all/most arguments of all/many functions,
-  it is precisely because of this that it is best implemented as a
-  general composable tool (such a as a decorator/wrapper function).
-
-  If done, it ought to be done for both exception and traceback, so not
-  supporting it for one implies not supporting it for the other.
-
-  Not supporting it is reason to not accidentally let it work despite
-  being undocumented, because again, people assume that if it works it
-  is supported.
-
-  This is why the code uses an affirmative result from ``issubtype``
-  to decide whether to call ``exception`` to construct an instance,
-  instead of any other approach, even though this forces calling
-  ``isinstance`` first to avoid a spurious ``TypeError``.
+  If someone really wants function arguments to accept arbitrary
+  callables that will be called when they are used, that is a
+  generic feature that can be easily implemented separately, as
+  a wrapper for ``raise_``, or in a generic way that may already
+  exist in a functional programming or lazy evaluation library.
 
 * To aid portability of code to Python implementations that do not
   support specifying a custom traceback when raising, allowing
@@ -264,7 +246,7 @@ Design Decisions
   using it, you deliberately included it into your project, or a
   dependency of yours did.
 
-* Null out *both* arguments in the ``finally`` inside of ``raise_``
+* Nulling out *both* arguments in the ``finally`` inside of ``raise_``
   to alleviate the potential for reference cycles being made by the
   traceback, which references all locals in each stack frame.
 
@@ -295,7 +277,7 @@ In particular, Python syntax for raising an exception with
 a custom traceback is simply incompatible between Python 3
 and Python 2, and the only way around it is **both**
 
-1. separate importable files *or* ``eval``, and
+1. ``exec`` *or* separate files for ``import``, and
 2. catching syntax errors *or* version checking.
 
 So code belongs in here if it protects users from having to code
