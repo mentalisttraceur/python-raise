@@ -68,7 +68,7 @@ The ``raise_`` **function** does *not* reuse
 ``__traceback__``, and instead clears it if you do
 not pass in a traceback, as if you passed in ``None``.
 If you want the Python 3 behavior of reusing the
-``__traceback__``, you should pass it to ``raise_``:
+``__traceback__``, you should explicitly pass it in:
 
 .. code:: python
 
