@@ -40,9 +40,6 @@ Raise an exception:
 
     raise_(Exception('foo'))
 
-(You can also pass an exception type instead of
-an instance as the first argument to ``raise_``.)
-
 Raise an exception with a traceback:
 
 .. code:: python
@@ -64,22 +61,21 @@ techniques for many more uses.
 Surprises
 ---------
 
-In Python 3, exceptions remember their traceback (the
-``__traceback__`` property). The ``raise`` **statement**
-reuses this every time it raises an exception unless
-you explicitly set another traceback. The ``raise_``
-**function** does *not* reuse ``__traceback__``, and
-instead clears it if you do not pass in a traceback,
-as if you passed in ``None``. If you want the Python 3
-behavior of reusing the ``__traceback__``, you should
-explicitly pass it to ``raise_``:
+In Python 3, the ``raise`` **statement** reuses the
+``__traceback__`` attribute every time it raises an
+exception unless you explicitly set another traceback.
+The ``raise_`` **function** does *not* reuse
+``__traceback__``, and instead clears it if you do
+not pass in a traceback, as if you passed in ``None``.
+If you want the Python 3 behavior of reusing the
+``__traceback__``, you should pass it to ``raise_``:
 
 .. code:: python
 
     raise_(exception, exception.__traceback__)
 
-Or, if you want to gracefully degrade on Python 2
-or Python implementations which do not have
+Or, if you want to gracefully degrade on
+Python implementations which do not have
 ``__traceback__`` on their exceptions:
 
 .. code:: python
@@ -118,9 +114,8 @@ Depending on your needs, either:
 That way you can always do ``from raise_ import raise_``
 in all of your other code and it'll just work.
 
-You are of course welcome to just copy-paste the tiny ``raise_`` function
-definition into your code, just keep in mind the compatibility issues
-involved: your code will only work without modification on Python
-versions compatible with the version you chose, and Python 2's version
-causes a SyntaxError in Python 3, which is uncatchable unless you import
-it from another file or wrap that function definition in an ``exec``.
+You are of course welcome to just copy-paste the tiny ``raise_``
+function definition into your code, just keep in mind the
+compatibility issues involved: your code will only work without
+modification on Python versions compatible with the version you
+chose, and Python 2's version causes a SyntaxError in Python 3.
