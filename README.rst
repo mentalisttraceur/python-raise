@@ -28,7 +28,7 @@ variant, see the `Manual Installation`_ section for tips.
 Usage
 -----
 
-Import the ``raise_`` function from the ``raise_`` module:
+Import ``raise_``:
 
 .. code:: python
 
@@ -44,7 +44,7 @@ Raise an exception with a traceback:
 
 .. code:: python
 
-    raise_(Exception('foo'), my_traceback_object)
+    raise_(Exception('foo'), traceback)
 
 Raise in a ``lambda``:
 
