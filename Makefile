@@ -1,8 +1,8 @@
 default:
 	python setup.py sdist
-	python2 setup.py bdist_wheel
+	python setup.py bdist_wheel --python-tag py2
 	rm build/lib/raise_.py
-	python3 setup.py bdist_wheel
+	python setup.py bdist_wheel --python-tag py3
 
 clean:
 	rm -rf __pycache__ build raise.egg-info dist
