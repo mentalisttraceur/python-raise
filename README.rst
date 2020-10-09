@@ -43,8 +43,8 @@ Raise an exception:
 
     raise_(Exception('foo'))
 
-(You can also pass an exception type instead of an
-instance as the first argument to ``raise_``.)
+(You can also pass an exception type instead of
+an instance as the first argument to ``raise_``.)
 
 Raise an exception with a traceback:
 
@@ -58,8 +58,36 @@ Raise in a ``lambda``:
 
     lambda x: x if x > 0 else raise_(ValueError('x is too small!')) 
 
-And you can combine ``raise_`` with ``functools.partial`` and other
-functional programming libraries and techniques for many more uses.
+And of course because ``raise_`` is a function,
+you can combine it with ``functools.partial``
+and other functional programming libraries and
+techniques for many more uses.
+
+
+Surprises
+---------
+
+In Python 3, exceptions remember their traceback (the
+``__traceback__`` property). The ``raise`` **statement**
+reuses this every time it raises an exception unless
+you explicitly set another traceback. The ``raise_``
+**function** does *not* reuse ``__traceback__``, and
+instead clears it if you do not pass in a traceback,
+as if you passed in ``None``. If you want the Python 3
+behavior of reusing the ``__traceback__``, you should
+explicitly pass it to ``raise_``:
+
+.. code:: python
+
+    raise_(exception, exception.__traceback__)
+
+Or, if you want to gracefully degrade on Python 2
+or Python implementations which do not have
+``__traceback__`` on their exceptions:
+
+.. code:: python
+
+    raise_(exception, getattr(exception, '__traceback__', None))
 
 
 Portability
@@ -70,8 +98,9 @@ Portable to all releases of both Python 3 and Python 2.
 (The oldest tested is 2.5, but it will likely work on all
 Python 2 versions and probably on even earlier versions.)
 
-For implementations of Python that do not support raising with a custom
-traceback, a "no traceback" variant can be installed manually.
+For implementations of Python that do not support raising
+with a custom traceback, a "no traceback" variant can be
+installed manually.
 
 
 Manual Installation
