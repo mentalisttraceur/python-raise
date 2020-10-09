@@ -21,8 +21,7 @@ finally:
     readme_file.close()
 
 if 'sdist' in sys.argv:
-    # When building a source distribution, we need to include the
-    # full package with both versions: Python 3 and Python 2.
+    # When building a source distribution, include all versions:
     modules = ['raise_3', 'raise_2', 'raise_no_traceback']
 else:
     # When not building a source distribution, we can include
