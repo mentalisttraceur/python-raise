@@ -6,4 +6,4 @@ default:
 
 clean:
 	rm -rf __pycache__ build *.egg-info dist
-	rm -f *.py[oc] raise_.py MANIFEST
+	rm -f *.py[oc] MANIFEST raise_.py
