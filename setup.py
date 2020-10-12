@@ -21,7 +21,7 @@ finally:
     readme_file.close()
 
 
-def bdist_wheel_args_check(tag, args=sys.argv):
+def bdist_wheel_tag_check(tag, args=sys.argv):
     if 'bdist_wheel' not in args:
         return False
     if '--python-tag' in args and tag in args:
@@ -40,9 +40,9 @@ else:
     modules = ['raise_']
 
     packaged_path = os.path.join(project_directory, 'raise_.py')
-    if bdist_wheel_args_check('py3'):
+    if bdist_wheel_tag_check('py3'):
         source_path = os.path.join(project_directory, 'raise_3.py')
-    elif bdist_wheel_args_check('py2'):
+    elif bdist_wheel_tag_check('py2'):
         source_path = os.path.join(project_directory, 'raise_2.py')
     elif sys.version_info >= (3,):
         source_path = os.path.join(project_directory, 'raise_3.py')
