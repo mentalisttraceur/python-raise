@@ -32,11 +32,11 @@ def bdist_wheel_tag_check(tag, args=sys.argv):
 
 
 if 'sdist' in sys.argv:
-    # When building a source distribution, include all versions:
+    # When building a source distribution, include all variants:
     modules = ['raise_3', 'raise_2', 'raise_no_traceback']
 else:
-    # When not building a source distribution, we can include
-    # just the file for the matching Python version.
+    # When not building a source distribution, we select
+    # just the file for the matching Python version:
     modules = ['raise_']
 
     packaged_path = os.path.join(project_directory, 'raise_.py')
