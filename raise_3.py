@@ -20,7 +20,7 @@ with all the advantages of functions over syntax.
 
 
 __all__ = ('raise_',)
-__version__ = '1.1.2'
+__version__ = '1.1.3'
 
 
 def raise_(exception, traceback=None):
