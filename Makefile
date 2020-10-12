@@ -5,5 +5,5 @@ default:
 	python setup.py bdist_wheel --python-tag py3
 
 clean:
-	rm -rf __pycache__ build raise.egg-info dist
+	rm -rf __pycache__ build *.egg-info dist
 	rm -f *.py[oc] raise_.py MANIFEST
