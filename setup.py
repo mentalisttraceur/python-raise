@@ -39,7 +39,7 @@ else:
     # just the file for the matching Python version:
     modules = ['raise_']
 
-    packaged_path = os.path.join(project_directory, 'raise_.py')
+    path_setup_py_uses = os.path.join(project_directory, 'raise_.py')
     if bdist_wheel_tag_check('py3'):
         source_path = os.path.join(project_directory, 'raise_3.py')
     elif bdist_wheel_tag_check('py2'):
@@ -49,11 +49,11 @@ else:
     else:
         source_path = os.path.join(project_directory, 'raise_2.py')
     try:
-        os.unlink(packaged_path)
+        os.unlink(path_setup_py_uses)
     except OSError as error:
         if error.errno != errno.ENOENT:
             raise
-    os.link(source_path, packaged_path)
+    os.link(source_path, path_setup_py_uses)
 
 setup(
     name='raise',
