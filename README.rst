@@ -108,9 +108,9 @@ Depending on your needs, either:
   * ``raise_no_traceback.py`` is for Python implementations which
     do not support raising exceptions with a custom traceback.
 
-* Take the above files that you need, and save them in a folder called
-  ``raise_`` along with an ``__init__.py`` that conditionally imports
-  from the right file as needed in your unique situation.
+* Take the above files that you need, and save them in a folder
+  called ``raise_`` along with an ``__init__.py`` that
+  conditionally imports from the right file as needed.
 
 That way all other code can always use the same
 import statements and it will always just work.
