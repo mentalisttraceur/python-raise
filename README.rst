@@ -112,5 +112,4 @@ Depending on your needs, either:
   called ``raise_`` along with an ``__init__.py`` that
   conditionally imports from the right file as needed.
 
-That way all other code can always use the same
-import statements and it will always just work.
+That way all other code can just always use the same import statements.
