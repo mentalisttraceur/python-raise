@@ -109,7 +109,8 @@ Depending on your needs, either:
     do not support raising exceptions with a custom traceback.
 
 * Take the above files that you need, and save them in a folder
-  called ``raise_`` along with an ``__init__.py`` that
+  called ``raise_`` along with a custom ``__init__.py`` that
   conditionally imports from the right file as needed.
 
-That way all other code can just always use the same import statements.
+That way you can always do ``from raise_ import raise_``
+in all of your other code and it'll just work.
