@@ -10,8 +10,8 @@ exceptions with all the advantages of functions over syntax.
 Versioning
 ----------
 
-This library's version numbers follow the `SemVer 2.0.0 specification
-<https://semver.org/spec/v2.0.0.html>`_.
+This library's version numbers follow the `SemVer 2.0.0
+specification <https://semver.org/spec/v2.0.0.html>`_.
 
 
 Installation
@@ -52,10 +52,9 @@ Raise in a ``lambda``:
 
     lambda x: x if x > 0 else raise_(ValueError('x is too small!')) 
 
-And of course because ``raise_`` is a function,
-you can combine it with ``functools.partial``
-and other functional programming libraries and
-techniques for many more uses.
+And of course because ``raise_`` is a function, you can combine
+it with ``functools.partial`` and other functional programming
+libraries and techniques for many more uses.
 
 
 Surprises
