@@ -60,13 +60,9 @@ libraries and techniques for many more uses.
 Surprises
 ---------
 
-In Python 3, the ``raise`` **statement** reuses the ``__traceback__``
-attribute every time it raises an exception unless you explicitly
-set another traceback. The ``raise_`` **function** does *not* reuse
-``__traceback__``, and instead clears it if you do not pass in a
-traceback, as if you passed in ``None``. If you want the Python 3
-behavior of reusing the ``__traceback__``, you should explicitly
-pass it in:
+``raise_`` clears ``__traceback__`` if you don't pass in a traceback,
+same as if you passed in ``None``. If you want the Python 3 behavior
+of reusing the ``__traceback__``, you should explicitly pass it in:
 
 .. code:: python
 
