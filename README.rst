@@ -72,9 +72,8 @@ pass it in:
 
     raise_(exception, exception.__traceback__)
 
-Or, if you want to gracefully degrade on
-Python implementations which do not have
-``__traceback__`` on their exceptions:
+Or, if you want to gracefully degrade on Python implementations
+which do not have ``__traceback__`` on their exceptions:
 
 .. code:: python
 
