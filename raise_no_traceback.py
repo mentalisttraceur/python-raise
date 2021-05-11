@@ -26,7 +26,7 @@ Note:
 
 
 __all__ = ('raise_',)
-__version__ = '1.1.3'
+__version__ = '1.1.4'
 
 
 def raise_(exception, traceback=None):
