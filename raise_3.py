@@ -8,7 +8,7 @@ with all the advantages of functions over syntax.
 """
 
 __all__ = ('raise_',)
-__version__ = '1.1.6'
+__version__ = '1.1.7'
 
 
 def raise_(exception, traceback=None):
