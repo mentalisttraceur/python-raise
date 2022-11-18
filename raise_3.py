@@ -8,7 +8,7 @@ with all the advantages of functions over syntax.
 """
 
 __all__ = ('raise_',)
-__version__ = '1.1.7'
+__version__ = '1.1.8'
 
 
 def raise_(exception, traceback=None):
@@ -21,6 +21,10 @@ def raise_(exception, traceback=None):
     if isinstance(exception, type) and issubclass(exception, BaseException):
         exception = exception()
     try:
-        raise exception.with_traceback(traceback)
+        exception = exception.with_traceback(traceback)
+    except AttributeError:
+        pass
+    try:
+        raise exception
     finally:
         exception = traceback = None
