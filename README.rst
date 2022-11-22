@@ -21,9 +21,6 @@ Installation
 
     pip install raise
 
-If you need to get it manually, or you need the "no traceback"
-variant, see the `Manual Installation`_ section for tips.
-
 
 Usage
 -----
@@ -85,25 +82,5 @@ Portable to all releases of both Python 3 and Python 2.
 Python 2 versions and probably on even earlier versions.)
 
 For implementations of Python that do not support raising
-with a custom traceback, a "no traceback" variant can be
-installed manually.
-
-
-Manual Installation
--------------------
-
-Depending on your needs, either:
-
-* Take one of these files and save it as ``raise_.py``:
-
-  * ``raise_3.py`` is for Python 3.
-  * ``raise_2.py`` is for Python 2.
-  * ``raise_no_traceback.py`` is for Python implementations which
-    do not support raising exceptions with a custom traceback.
-
-* Take the above files that you need, and save them in a folder
-  called ``raise_`` along with a custom ``__init__.py`` that
-  conditionally imports from the right file as needed.
-
-That way you can always do ``from raise_ import raise_``
-in all of your other code and it'll just work.
+with a custom traceback, a "no traceback" variant is
+included in the source that can be installed manually.
